@@ -4,25 +4,39 @@ import { Button, Modal, Space, Table, Tag } from "antd";
 import ContentHeader from "../common/ContentHeader";
 import Column from "antd/es/table/Column";
 import {
+  getCategories,
+  clearCategoryState,
+} from "../../redux/actions/categoryAction";
+import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import { connect } from "react-redux";
 
 class ListCategory extends Component {
   constructor() {
     super();
     this.state = {
-      dataSource: [
-        { categoryId: 1, name: "Java", status: 0 },
-        { categoryId: 2, name: "JavaScript", status: 0 },
-        { categoryId: 3, name: "Php", status: 1 },
-        { categoryId: 4, name: "reactJS", status: 1 },
-        { categoryId: 5, name: "Angular", status: 0 },
-      ],
+      // dataSource: [
+      //   { categoryId: 1, name: "Java", status: 0 },
+      //   { categoryId: 2, name: "JavaScript", status: 0 },
+      //   { categoryId: 3, name: "Php", status: 1 },
+      //   { categoryId: 4, name: "reactJS", status: 1 },
+      //   { categoryId: 5, name: "Angular", status: 0 },
+      // ],
       category: {},
     };
   }
+  componentDidMount = () => {
+    this.props.getCategories();
+    console.log("Did Mount");
+  };
+  componentWillUnmount = () => {
+    this.props.clearCategoryState();
+    console.log("will in mount");
+  };
+
   editCategory = (category) => {
     console.log(">>>category", category);
   };
@@ -46,6 +60,8 @@ class ListCategory extends Component {
 
   render() {
     const { navigate } = this.props.router;
+    const { categories } = this.props;
+    console.log(">>>>category", categories);
     return (
       <>
         <ContentHeader
@@ -54,15 +70,11 @@ class ListCategory extends Component {
           title="List Category"
         />
 
-        <Table
-          dataSource={this.state.dataSource}
-          size="small"
-          rowKey="categoryId"
-        >
+        <Table dataSource={categories} size="small" rowKey="id">
           <Column
             title="Category ID"
-            key="categoryId"
-            dataIndex="categoryId"
+            key="id"
+            dataIndex="id"
             width={40}
             align="center"
           ></Column>
@@ -115,4 +127,15 @@ class ListCategory extends Component {
   }
 }
 
-export default withRouter(ListCategory);
+const mapStateToProps = (state) => ({
+  categories: state.categoryReducer.categories,
+});
+
+const mapDispatchToProps = {
+  getCategories,
+  clearCategoryState,
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ListCategory)
+);
