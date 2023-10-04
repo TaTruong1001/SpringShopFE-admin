@@ -1,5 +1,5 @@
 import "./DashboardPage.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,7 +7,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme, Row, Col, Avatar } from "antd";
+import { Layout, Menu, Button, theme, Row, Col, Avatar, message } from "antd";
 import {
   MdOutlineHome,
   MdCategory,
@@ -32,12 +32,24 @@ import {
 import Home from "../components/home/Home";
 import AddOrEditCategory from "../components/categories/AddOrEditCategory";
 import ListCategory from "../components/categories/ListCategory";
+import { useDispatch, useSelector } from "react-redux";
+import { setMessage } from "../redux/actions/commonAction";
 const { Header, Sider, Content } = Layout;
 
 function DashboardPage() {
   const [marginLeft, setMarginLeft] = useState(200);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+
+  const msg = useSelector((state) => state.commonReducer.message);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (msg) {
+      dispatch(setMessage(""));
+      message.success(msg);
+    }
+  }, [msg]);
 
   const siteLayoutStyle = { marginLeft, marginLeft };
 
