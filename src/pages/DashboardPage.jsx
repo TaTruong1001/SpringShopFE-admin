@@ -41,9 +41,6 @@ function DashboardPage() {
 
   const siteLayoutStyle = { marginLeft, marginLeft };
 
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   return (
     <Layout>
       <Sider
@@ -130,11 +127,11 @@ function DashboardPage() {
           ]}
         />
       </Sider>
-      <Layout style={siteLayoutStyle}>
+      <Layout className="site-layout" style={siteLayoutStyle}>
         <Header
+          className="site-layout-background"
           style={{
             padding: 0,
-            background: colorBgContainer,
           }}
         >
           <Row>
@@ -163,11 +160,11 @@ function DashboardPage() {
           </Row>
         </Header>
         <Content
+          className="site-layout-background"
           style={{
             margin: "20px 24px 16px 24px",
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
           }}
         >
           <div className="content-panel">

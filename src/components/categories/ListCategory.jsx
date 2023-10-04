@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
-import { PageHeader } from "@ant-design/pro-layout";
-import { Button, Col, Divider, Modal, Space, Table, Tag } from "antd";
+import { Button, Modal, Space, Table, Tag } from "antd";
 import ContentHeader from "../common/ContentHeader";
 import Column from "antd/es/table/Column";
 import {
@@ -76,7 +75,7 @@ class ListCategory extends Component {
             render={(_, { status }) => {
               let color = "volcano";
               let name = "In-Visible";
-              if (status == 0) {
+              if (status === 0) {
                 color = "green";
                 name = "Visible";
               }
